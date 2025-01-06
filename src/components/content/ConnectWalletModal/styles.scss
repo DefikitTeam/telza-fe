@@ -1,0 +1,21 @@
+.wallet-list-container {
+  margin-right: 7px;
+  max-height: 360px;
+  overflow-y: auto;
+  padding-left: 20px;
+  padding-right: 7px;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    right: 0;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    @apply bg-blackWhiteNeutral-800;
+    border-radius: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    @apply bg-blackWhiteNeutral-900;
+  }
+}

@@ -1,0 +1,25 @@
+.container {
+  :global {
+    .swiper-wrapper {
+      padding-bottom: 20px;
+    }
+    .swiper-pagination {
+      transform: translateY(14px);
+      .swiper-pagination-bullet {
+        svg {
+          path {
+            fill: #f3f5f7;
+          }
+        }
+      }
+      .swiper-pagination-bullet-active {
+        background: none;
+        svg {
+          path {
+            fill: #71717a;
+          }
+        }
+      }
+    }
+  }
+}

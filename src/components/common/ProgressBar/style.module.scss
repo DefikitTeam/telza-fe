@@ -1,0 +1,13 @@
+.progressBar {
+  display: block;
+  width: 100%;
+  height: 30px;
+
+  -webkit-mask-image: var(--mask-ImgUrl);
+  mask-image: var(--mask-ImgUrl);
+
+  -webkit-mask-repeat: space;
+  mask-repeat: space;
+  -webkit-mask-size: 26px 36px;
+  mask-size: 26px 36px;
+}

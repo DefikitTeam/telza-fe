@@ -1,0 +1,7 @@
+export const TELAZ_HOME_ROUTE = '/'
+export const TELAZ_GEMS_ROUTE = '/gems'
+export const TELAZ_PROFILE_ROUTE = '/me'
+export const TELAZ_USER_PROFILE_ROUTE = '/profile'
+export const TELAZ_FEED_ROUTE = '/feed'
+export const TELAZ_EARN_ROUTE = '/earn'
+export const TELAZ_REFERRAL_ROUTE = '/referral'

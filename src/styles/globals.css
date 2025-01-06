@@ -1,0 +1,361 @@
+@import "base.tailwind.css";
+
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden;
+  background-color: black;
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+  @apply text-blackWhiteNeutral-0;
+  padding: 0 !important;
+}
+
+*:focus-visible,
+*:focus {
+  outline: none;
+}
+
+.header-bar {
+  height: 72px;
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(4px);
+}
+
+.app-background-cover {
+  position: absolute;
+  inset: 0;
+  background: fixed;
+  z-index: 0;
+  background-size: cover;
+
+  @media (max-width: 768px) {
+    background: scroll;
+  }
+}
+
+.MuiModal-backdrop {
+  /*background-color: rgba(0, 0, 0, 0.80) !important;*/
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+    background-color: #ff0;
+  }
+
+  10% {
+    transform: translateX(-25px);
+    background-color: #ff0;
+  }
+
+  20% {
+    transform: translateX(25px);
+    background-color: #ff0;
+  }
+
+  30% {
+    transform: translateX(-25px);
+  }
+
+  40% {
+    transform: translateX(25px);
+  }
+
+  50% {
+    transform: translateX(-25px);
+  }
+
+  60% {
+    transform: translateX(25px);
+  }
+
+  70% {
+    transform: translateX(-25px);
+  }
+
+  80% {
+    transform: translateX(25px);
+  }
+
+  90% {
+    transform: translateX(-25px);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes shakeSmall {
+  0% {
+    transform: translateX(0);
+    background-color: #ff0;
+  }
+
+  10% {
+    transform: translateX(-19px);
+    background-color: #ff0;
+  }
+
+  20% {
+    transform: translateX(19px);
+    background-color: #ff0;
+  }
+
+  30% {
+    transform: translateX(-19px);
+  }
+
+  40% {
+    transform: translateX(19px);
+  }
+
+  50% {
+    transform: translateX(-19px);
+  }
+
+  60% {
+    transform: translateX(19px);
+  }
+
+  70% {
+    transform: translateX(-19px);
+  }
+
+  80% {
+    transform: translateX(19px);
+  }
+
+  90% {
+    transform: translateX(-19px);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-shake {
+  animation: shake 0.7s ease-in-out;
+}
+
+.animate-shake-small {
+  animation: shakeSmall 0.7s ease-in-out;
+}
+
+@keyframes slideIn {
+  from {
+    width: 410px;
+  }
+
+  to {
+    width: 0;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    width: 100%;
+  }
+
+  to {
+    width: 0;
+  }
+}
+
+.notification {
+  width: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.notification.show {
+  animation: slideIn 3s ease-out forwards;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+[class*="shadow-"] {
+  transition: box-shadow 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.boxGradient {
+  position: relative;
+  box-sizing: border-box;
+  background-clip: padding-box;
+  border: solid 4px transparent;
+  border-radius: 1em;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    margin: -3px;
+    border-radius: inherit;
+    background: linear-gradient(to right, #a7a6ff, #a6faff);
+  }
+}
+
+.gradient-button {
+  border-radius: 14px;
+  background: linear-gradient(268deg, #a6faff 13.88%, #a7a6ff 89.53%);
+  box-shadow:
+    -2.5px -2.5px 0px 0px #649994 inset,
+    2.5px 2.5px 0px 0px #e3fff7 inset;
+  padding: 12px 20px;
+  position: relative;
+  cursor: pointer;
+  text-align: center;
+  transition: box-shadow 0.3s ease-in-out;
+
+  &:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 14px;
+    background: #a8a6ff;
+    filter: blur(6px);
+    z-index: -1;
+    top: 0;
+    left: 0;
+  }
+
+  &:hover {
+    background: #a8a6ff;
+    box-shadow:
+      -2.5px -2.5px 0px 0px #649994 inset,
+      2.5px 2.5px 0px 0px #e3fff7 inset,
+      3px 4px 0px 0px #fff;
+  }
+}
+
+/* Marquee styles */
+.marquee {
+  --gap: 20px;
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+  gap: var(--gap);
+}
+
+.marquee__content {
+  flex-shrink: 0;
+  display: flex;
+  gap: var(--gap);
+  min-width: 100%;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-100% - var(--gap)));
+  }
+}
+
+/* Pause animation when reduced-motion is set */
+@media (prefers-reduced-motion: reduce) {
+  .marquee__content {
+    animation-play-state: paused !important;
+  }
+}
+
+/* Enable animation */
+.marquee__content {
+  animation: scroll 25s linear infinite;
+}
+
+/* Reverse animation */
+.marquee--reverse .marquee__content {
+  animation-direction: reverse;
+}
+
+/* Pause on hover */
+.marquee--hover-pause:hover .marquee__content {
+  animation-play-state: paused;
+}
+
+/* Attempt to size parent based on content. Keep in mind that the parent width is equal to both content containers that stretch to fill the parent. */
+.marquee--fit-content {
+  max-width: fit-content;
+}
+
+@keyframes scroll-abs {
+  from {
+    transform: translateX(calc(100% + var(--gap)));
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Other page demo styles */
+.marquee__content>* {
+  flex: 0 0 auto;
+}
+
+.text-gradient {
+  background: var(--Gadient, linear-gradient(268deg, #a6faff 13.88%, #a7a6ff 89.53%));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.maintenance-btn {
+  background: #525252 !important;
+  box-shadow: none !important;
+  color: #404040 !important;
+  border: 1px solid var(--black-white-neutral-500, #71717a) !important;
+}
+
+.maintenance-btn:before {
+  display: none !important;
+}
