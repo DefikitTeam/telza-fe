@@ -13,28 +13,29 @@ import {
 import { useBalance } from '@/hooks/useBalance'
 import { useModal } from '@/hooks/useModal'
 import { useAppDispatch, useAppSelector } from '@/lib/hooks'
-import { appActions, defaultPriorityFee, fetchBalance } from '@/stores/app.slice'
+import { appActions } from '@/stores/app.slice'
 import { settingActions } from '@/stores/settings.slice'
 import { msSansSerifBoldFont } from '@/themes/fonts'
 import { isMobile } from '@/utils/deviceDetection'
-import { setAccessToken, setRefreshToken } from '@/utils/tokenCookies'
 import { AppBar, Box, Container, Toolbar, Typography } from '@mui/material'
-import { useWallet, Wallet } from '@solana/wallet-adapter-react'
-import { useMutation } from '@tanstack/react-query'
 
+import { useWallet, Wallet } from '@solana/wallet-adapter-react'
+import { useAccount, useDisconnect } from 'wagmi'
 import BigNumber from 'bignumber.js'
 import { useSnackbar } from 'notistack'
 import HeaderMobile from './HeaderMobile'
 import HeaderDropdown from './HeaderDropdown'
+import { CHAIN_TYPE } from '@/constant/enum/chain'
 
 export default function HeaderApp() {
-  const { publicKey, connected, connecting, signMessage, disconnect, select, wallet } = useWallet()
+  // solana
+  const { publicKey, connected: connectedSolana, connecting, signMessage, disconnect: disconnectSolana, select, wallet } = useWallet()
+  // evm
+  const { isConnected, address } = useAccount()
+  const { disconnect: disconnectEvm } = useDisconnect()
+
   const { enqueueSnackbar } = useSnackbar()
   const { isOpen: isOpenHowItWork, open: openHowItWork, close: closeHowItWork } = useModal()
-  const { connectionSocket } = useBalance()
-  const handleSelectWallet = (wallet: Wallet) => {
-    select(wallet.adapter.name)
-  }
 
   const dispatch = useAppDispatch()
 
@@ -45,12 +46,12 @@ export default function HeaderApp() {
     dispatch(settingActions.toggleConnectModal(false))
   }
 
-  console.log("publicKey", publicKey?.toBase58());
 
-
-  const { wallet: walletStore } = useAppSelector((state) => state.appStore)
   const isShowConnectModal = useAppSelector((state) => state?.settings?.isShowConnectModal)
-
+  const typeChain = useAppSelector((state) => state?.appStore?.type)
+  const connectSolana = useAppSelector((state) => state?.appStore?.connectSolana)
+  const connectEvm = useAppSelector((state) => state?.appStore?.connectEvm)
+  const connectTon = useAppSelector((state) => state?.appStore?.connectTon)
 
   useEffect(() => {
     if (isMobile()) return
@@ -74,40 +75,29 @@ export default function HeaderApp() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [enqueueSnackbar])
 
+  useEffect(() => {
+    if (connectSolana) {
+      disconnectEvm()
+    }
+    if (connectEvm) {
+      disconnectSolana()
+    }
+  }, [connectSolana, connectEvm])
+
 
   useEffect(() => {
-    if (connected && publicKey) {
-      dispatch(fetchBalance(publicKey?.toBase58() || ''))
-    } else {
-      dispatch(appActions.resetBalance())
+    // solana
+    if (connectedSolana && publicKey) {
+      dispatch(appActions.updateWallet(publicKey.toBase58()))
+      handleClose()
+      return
     }
-  }, [connected, dispatch, publicKey])
-
-  useEffect(() => {
-    if (connected && publicKey) {
-      connectionSocket.onAccountChange(
-        publicKey,
-        (updateAccountInfo) => {
-          let balanceBig = new BigNumber(updateAccountInfo?.lamports || 0).div(1e9)
-          let balanceMax = balanceBig.gt(defaultPriorityFee) ? balanceBig.minus(defaultPriorityFee).toNumber() : 0
-          dispatch(appActions.updateBalance([balanceBig.toNumber(), balanceMax]))
-        },
-        'confirmed'
-      )
+    // evm
+    if (isConnected && address) {
+      dispatch(appActions.updateWallet(address))
+      return
     }
-  }, [connected, publicKey, dispatch, connectionSocket])
-
-  useEffect(() => {
-    if (connected && publicKey) {
-      if (!walletStore) {
-        dispatch(appActions.updateWallet(publicKey.toBase58()))
-        return
-      }
-      if (walletStore !== publicKey.toBase58()) {
-        dispatch(appActions.updateWallet(publicKey.toBase58()))
-      }
-    }
-  }, [dispatch, connected, publicKey, walletStore])
+  }, [dispatch, connectedSolana, publicKey, isConnected, address])
 
   const pages: Array<{
     name: string
@@ -215,7 +205,7 @@ export default function HeaderApp() {
             alignItems="center"
             gap={3}
           > {
-              !connected ? (
+              !connectedSolana && !isConnected ? (
                 <Box sx={{ flexGrow: 0 }}>
                   <BaseButton
                     color="secondary"
@@ -273,7 +263,6 @@ export default function HeaderApp() {
             <ConnectWalletModal
               isOpen={isShowConnectModal}
               close={handleClose}
-              onSelect={handleSelectWallet}
             />
           </Box>
         </Toolbar>

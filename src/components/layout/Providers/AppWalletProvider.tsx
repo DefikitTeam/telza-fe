@@ -38,32 +38,31 @@ const App: FC<PropsWithChildren<any>> = ({ children }) => {
   const [endpoint, setEndpoint] = React.useState<string>(rpcNodeUrl || defaultEndpoint)
 
 
-  registerMoonGateWallet({
-    authMode: 'Ethereum',
-    position: 'top-right'
-    // logoDataUri: 'OPTIONAL ADD IN-WALLET LOGO URL HERE',
-    // buttonLogoUri: 'ADD OPTIONAL LOGO FOR WIDGET BUTTON HERE'
-  })
-  registerMoonGateWallet({
-    authMode: 'Google',
-    position: 'top-right'
-    // logoDataUri: 'OPTIONAL ADD IN-WALLET LOGO URL HERE',
-    // buttonLogoUri: 'ADD OPTIONAL LOGO FOR WIDGET BUTTON HERE'
-  })
   // registerMoonGateWallet({
-  //   authMode: 'Twitter',
+  //   authMode: 'Ethereum',
   //   position: 'top-right'
   //   // logoDataUri: 'OPTIONAL ADD IN-WALLET LOGO URL HERE',
   //   // buttonLogoUri: 'ADD OPTIONAL LOGO FOR WIDGET BUTTON HERE'
   // })
-  registerMoonGateWallet({
-    authMode: 'Apple',
-    position: 'top-right'
-    // logoDataUri: 'OPTIONAL ADD IN-WALLET LOGO URL HERE',
-    // buttonLogoUri: 'ADD OPTIONAL LOGO FOR WIDGET BUTTON HERE'
-  })
+  // registerMoonGateWallet({
+  //   authMode: 'Google',
+  //   position: 'top-right'
+  //   // logoDataUri: 'OPTIONAL ADD IN-WALLET LOGO URL HERE',
+  //   // buttonLogoUri: 'ADD OPTIONAL LOGO FOR WIDGET BUTTON HERE'
+  // })
+  // // registerMoonGateWallet({
+  // //   authMode: 'Twitter',
+  // //   position: 'top-right'
+  // //   // logoDataUri: 'OPTIONAL ADD IN-WALLET LOGO URL HERE',
+  // //   // buttonLogoUri: 'ADD OPTIONAL LOGO FOR WIDGET BUTTON HERE'
+  // // })
+  // registerMoonGateWallet({
+  //   authMode: 'Apple',
+  //   position: 'top-right'
+  //   // logoDataUri: 'OPTIONAL ADD IN-WALLET LOGO URL HERE',
+  //   // buttonLogoUri: 'ADD OPTIONAL LOGO FOR WIDGET BUTTON HERE'
+  // })
 
-  const dispatch = useAppDispatch()
 
 
   const wallets = useMemo(() => {

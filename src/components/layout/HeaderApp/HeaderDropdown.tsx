@@ -14,11 +14,17 @@ import { shortenAddress } from '@/utils/shortenAddress'
 import { deleteAccessToken } from '@/utils/tokenCookies'
 import { Avatar, Box, MenuItem, Typography } from '@mui/material'
 import { useWallet } from '@solana/wallet-adapter-react'
-
+import { useDisconnect } from 'wagmi'
 import { useRouter } from 'next/navigation'
+import { CHAIN_TYPE } from '@/constant/enum/chain'
 
 const HeaderDropdown = () => {
-  const { publicKey, disconnect } = useWallet()
+  const typeChain = useAppSelector((state) => state?.appStore?.type)
+  const wallet = useAppSelector((state) => state?.appStore?.wallet)
+  // solana
+  const { disconnect: disconnectSolana } = useWallet()
+  // evm
+  const { disconnect: disconnectEvm } = useDisconnect()
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorElNav)
   const router = useRouter()
@@ -26,8 +32,11 @@ const HeaderDropdown = () => {
 
 
   const handleLogout = async () => {
-    await disconnect()
-    deleteAccessToken()
+    console.log('handleLogout')
+
+    await disconnectSolana()
+    await disconnectEvm()
+    // deleteAccessToken()
     dispatch(appActions.updateWallet(null))
   }
 
@@ -79,7 +88,7 @@ const HeaderDropdown = () => {
             variant="MsSanParagraphLargeNormal"
             className="text-blackWhiteNeutral-50"
           >
-            {shortenAddress(publicKey?.toBase58(), 20, 8)}
+            {wallet ? shortenAddress(wallet, 20, 8) : 'Connect Wallet'}
           </Typography>
           <BaseImage
             url="icons/diamond-down-arrow.svg"
