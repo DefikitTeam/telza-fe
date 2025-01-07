@@ -1,0 +1,90 @@
+.swapCard {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  width: 100%;
+  max-width: 480px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+
+  h1 {
+    color: white;
+    margin: 0;
+    font-size: 24px;
+  }
+}
+
+.headerIcons {
+  display: flex;
+  gap: 8px;
+}
+
+.tokenInputs {
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.inputGroup {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  input {
+    text-align: right;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 16px;
+    width: 100%;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+  }
+}
+
+.input {
+  text-align: right;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 16px;
+  width: 100%;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+.tokenSelect {
+  min-width: 140px !important; // Set fixed minimum width
+  height: 40px !important; // Set fixed height
+  padding: 8px 16px !important;
+  border-radius: 20px !important;
+  white-space: nowrap; // Prevent text wrapping
+}
+
+.switchButton {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  padding: 4px;
+}
+
+.selectTokensButton {
+  border-radius: 24px !important;
+  padding: 12px !important;
+  font-size: 16px !important;
+}

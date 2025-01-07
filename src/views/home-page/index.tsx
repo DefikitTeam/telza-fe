@@ -1,19 +1,17 @@
 'use client'
 
-import { useMemo, useState } from 'react'
-import useScreenSize from '@/hooks/useScreenSize'
 import { Box } from '@mui/material'
-
+import SwapCard from './components/SwapCard'
+import ProvidersList from './components/ProvidersList'
 import style from './style.module.scss'
-
-import Link from 'next/link'
-
+import useScreenSize from '@/hooks/useScreenSize'
 
 export default function HomePage() {
   const { isMobile } = useScreenSize()
   return (
-    <Box>
-      Hello World
+    <Box className={style.container}>
+      <SwapCard />
+      <ProvidersList />
     </Box>
   )
 }
