@@ -4,7 +4,8 @@ import LayoutProvider from '@/components/layout/Providers/LayoutProvider'
 import ReduxProvider from '@/components/layout/Providers/ReduxProvider'
 import { siteConfig } from '@/constant/siteConfig'
 import { montserratFont } from '@/themes/fonts'
-
+import { CopilotKit } from "@copilotkit/react-core";
+import "@copilotkit/react-ui/styles.css";
 import '../styles/globals.css'
 
 import { Metadata } from 'next'
@@ -68,7 +69,9 @@ export default function RootLayout({
         ></script>
       </head>
       <body className={montserratFont.className}>
-        <ReduxProvider>{children}</ReduxProvider>
+        <CopilotKit publicApiKey="ck_pub_ab83c781ba4d2064188f6ae6d353a400">
+          <ReduxProvider>{children}</ReduxProvider>
+        </CopilotKit>
       </body>
     </html>
   )
