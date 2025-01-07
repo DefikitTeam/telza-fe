@@ -68,31 +68,31 @@ export const ButtonOverride: Theme['components'] = {
       {
         props: { color: 'primary', variant: 'contained' },
         style: ({ theme }) => ({
-          backgroundColor: theme.palette?.purple?.[400],
+          backgroundColor: theme.palette?.pink?.[400],
           '.Mui-wrap-child': {
             boxShadow: '-2px -2px 0px 0px #656499 inset, 2px 1px 0px 0px #E4E3FF inset'
           },
           ':disabled': {
-            backgroundColor: theme.palette?.purple?.[800],
+            backgroundColor: theme.palette?.pink?.[800],
             border: 'none',
             '& .Mui-wrap-child': {
-              background: theme.palette?.purple?.[800],
+              background: theme.palette?.pink?.[800],
               boxShadow: '-2px -2px 0px 0px #3B3A59 inset, 2px 2px 0px 0px #585869 inset'
             }
           },
           ':disabled:after': {
-            backgroundColor: theme.palette?.purple?.[800]
+            backgroundColor: theme.palette?.pink?.[800]
             // boxShadow: '-1px -1px 0px 0px #3B3A59 inset, 1px 1px 0px 0px #585869 inset'
           },
           '&:hover:disabled': {
-            backgroundColor: theme.palette?.purple?.[800],
+            backgroundColor: theme.palette?.pink?.[800],
             boxShadow: 'none'
           },
           '& .Mui-wrap-child': {
-            background: theme.palette?.purple?.[400]
+            background: theme.palette?.pink?.[400]
           },
           '&:hover:not(:disabled) .Mui-wrap-child': {
-            backgroundColor: theme.palette?.purple?.[300]
+            backgroundColor: theme.palette?.pink?.[300]
           }
         })
       },

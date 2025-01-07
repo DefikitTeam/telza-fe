@@ -19,7 +19,7 @@ const IOSSwitchStyled = styled((props: SwitchProps) => (
       transform: 'translateX(16px)',
       color: theme.palette?.blackWhiteNeutral?.['900'],
       '& + .MuiSwitch-track': {
-        backgroundColor: theme.palette?.purple?.['400'],
+        backgroundColor: theme.palette?.pink?.['400'],
         opacity: 1,
         border: `1px solid ${theme.palette?.blackWhiteNeutral?.['900']}`,
         boxShadow: '2px 2px 0px 0px #F5F5F5',

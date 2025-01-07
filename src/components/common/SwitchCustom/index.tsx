@@ -19,13 +19,13 @@ const CustomSwitch = styled(Switch)(({ theme }) => ({
   '& .MuiSwitch-switchBase': {
     padding: 2,
     paddingTop: 2.5,
-    color: theme.palette?.purple?.[300],
+    color: theme.palette?.pink?.[300],
     '&.Mui-checked': {
       transform: 'translateX(19px)',
       color: theme.palette?.blackWhiteNeutral?.[900],
       '& + .MuiSwitch-track': {
         opacity: 1,
-        backgroundColor: theme.palette?.purple?.[300]
+        backgroundColor: theme.palette?.pink?.[300]
       }
     }
   },
