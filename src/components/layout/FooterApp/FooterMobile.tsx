@@ -22,68 +22,6 @@ export default function FooterMobile() {
 
   const { isOpen: isOpenSearch, close: closeSearch, open: openSearch } = useModal()
 
-  const pages = [
-    {
-      name: 'Home',
-      icon: 'icons/nav-home.svg',
-      url: '/',
-      onClick() {
-        router.push(TELAZ_HOME_ROUTE)
-      }
-    },
-    {
-      name: 'Feed',
-      icon: 'icons/nav-feed.png',
-      url: '/',
-      onClick() {
-        router.push(TELAZ_FEED_ROUTE)
-      }
-    },
-    {
-      name: '',
-      icon: 'icons/nav-cart.png',
-      url: '/',
-      content: (
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          width={48}
-          height={48}
-          border="1px solid"
-          borderColor="blackWhiteNeutral.0"
-          borderRadius="14px"
-          className="cursor-pointer"
-          onClick={openSearch}
-        >
-          <BaseImage
-            url="icons/nav-search.svg"
-            width={20}
-            height={20}
-          />
-        </Box>
-      ),
-      onClick() {
-        //
-      }
-    },
-    {
-      name: 'Gems',
-      icon: 'icons/nav-gems.svg',
-      url: '/',
-      onClick() {
-        router.push(TELAZ_GEMS_ROUTE)
-      }
-    },
-    {
-      name: 'Socials',
-      icon: 'icons/nav-socials.svg',
-      url: '/',
-      onClick(e: HTMLElement) {
-        setAnchorElHamburgerMenu(e as any)
-      }
-    }
-  ]
 
   useEffect(() => {
     const checkUserScroll = () => {
@@ -103,34 +41,16 @@ export default function FooterMobile() {
 
   const menus = [
     {
-      icon: 'miniapp/icons/menu-mobile-coin.svg',
-      iconActive: 'miniapp/icons/menu-mobile-coin-active.svg',
-      label: 'Coins',
+      label: 'Home',
       path: TELAZ_HOME_ROUTE
     },
     {
-      icon: 'miniapp/icons/menu-mobile-friend.svg',
-      iconActive: 'miniapp/icons/menu-mobile-friend-active.svg',
-      label: 'Friends',
+      label: 'Referral',
       path: '/referral'
     },
     {
-      icon: 'miniapp/icons/menu-mobile-play.svg',
-      iconActive: 'miniapp/icons/menu-mobile-play-active.svg',
-      label: !isPlayClicked ? 'App' : 'Play',
-      path: '/play'
-    },
-    {
-      icon: 'miniapp/icons/menu-mobile-gems.svg',
-      iconActive: 'miniapp/icons/menu-mobile-gems-active.svg',
-      label: 'Gems',
-      path: '/gems'
-    },
-    {
-      icon: 'miniapp/icons/menu-mobile-earn.svg',
-      iconActive: 'miniapp/icons/menu-mobile-earn-active.svg',
-      label: 'Earn',
-      path: '/earn'
+      label: 'Contact',
+      path: '/contact'
     }
   ]
 
@@ -171,13 +91,6 @@ export default function FooterMobile() {
           position="relative"
           height="100%"
           justifyContent="center"
-          onClick={() => {
-            if (menu.path === '/play' && !isPlayClicked) {
-              setIsPlayClicked(true)
-              window.open('https://t.me/GemsFun_Bot/start', '_blank')
-            }
-            router.push(menu.path)
-          }}
         >
           {isActive(menu.path) && (
             <Box
@@ -201,21 +114,9 @@ export default function FooterMobile() {
                   left: -36
                 }}
               >
-                <BaseImage
-                  url={menu.iconActive}
-                  width={75}
-                  height={75}
-                />
               </Box>
             </Box>
-          ) : (
-            <BaseImage
-              url={menu.icon}
-              width={24}
-              height={24}
-            />
-          )}
-
+          ) : null}
           <Typography
             variant="MsSanParagraphXSmallNormal"
             color="blackWhiteNeutral.0"

@@ -52,29 +52,6 @@ const HeaderMobile = () => {
           hideHeader: true
         }}
       >
-        <Box className="rounded-xl bg-blackWhiteNeutral-900">
-          <Box
-            className="p-4 flex-center-between"
-            onClick={() => {
-              router.push(TELAZ_PROFILE_ROUTE)
-              onClose()
-            }}
-          >
-            <Typography
-              variant="MontserratLabelLargeRegular"
-              color="blackWhiteNeutral.0"
-            >
-              Profile
-            </Typography>
-            <Icon
-              url="icons/profile.svg"
-              size={20}
-              height={20}
-              className="text-blackWhiteNeutral-0"
-            />
-          </Box>
-        </Box>
-
         <Box
           className="mt-3 rounded-xl bg-blackWhiteNeutral-900 p-4 flex-center-between"
           onClick={() => {

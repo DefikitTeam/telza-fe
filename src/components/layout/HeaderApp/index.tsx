@@ -24,6 +24,8 @@ import { useMutation } from '@tanstack/react-query'
 
 import BigNumber from 'bignumber.js'
 import { useSnackbar } from 'notistack'
+import HeaderMobile from './HeaderMobile'
+import HeaderDropdown from './HeaderDropdown'
 
 export default function HeaderApp() {
   const { publicKey, connected, connecting, signMessage, disconnect, select, wallet } = useWallet()
@@ -213,12 +215,7 @@ export default function HeaderApp() {
             alignItems="center"
             gap={3}
           > {
-              connected && publicKey ? (
-                <Typography>
-                  {publicKey.toBase58()}
-                </Typography>
-              )
-                :
+              !connected ? (
                 <Box sx={{ flexGrow: 0 }}>
                   <BaseButton
                     color="secondary"
@@ -246,6 +243,32 @@ export default function HeaderApp() {
                     </Typography>
                   </BaseButton>
                 </Box>
+              )
+                :
+                (
+                  <Box>
+                    <Box
+                      sx={{
+                        display: {
+                          xs: 'none',
+                          sm: 'block'
+                        }
+                      }}
+                    >
+                      <HeaderDropdown />
+                    </Box>
+                    <Box
+                      sx={{
+                        display: {
+                          xs: 'block',
+                          sm: 'none'
+                        }
+                      }}
+                    >
+                      <HeaderMobile />
+                    </Box>
+                  </Box>
+                )
             }
             <ConnectWalletModal
               isOpen={isShowConnectModal}
