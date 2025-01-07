@@ -1,4 +1,3 @@
-import { GET_THREAD_TYPE } from '@/constant/enum/feed'
 import { configureStore } from '@reduxjs/toolkit'
 
 import { appReducer } from './app.slice'

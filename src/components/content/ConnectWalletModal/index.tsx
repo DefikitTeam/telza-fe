@@ -55,26 +55,27 @@ const ConnectWalletModal = ({
   }, [select, dispatch])
 
 
-  const handleConnectWallet = async (c: Connector) => {
+  const handleConnectEVMWallet = async (c: Connector) => {
     const provider = await c.getProvider()
     if (!provider) {
       enqueueSnackbar('Extension not installed', { variant: 'error' })
     } else {
-      try {
-        connect({ connector: c }, {
-          onSuccess: () => {
-            close()
-            dispatch(appActions.updateType(CHAIN_TYPE.EVM))
+      console.log("comin here");
+
+      connect({ connector: c }, {
+        onSuccess: () => {
+          close()
+          dispatch(appActions.updateType(CHAIN_TYPE.EVM))
+        },
+        onError: (error: any) => {
+          console.log("error LOL", JSON.stringify(error));
+          if (error?.code === 4001) {
+            enqueueSnackbar('User rejected the request', { variant: 'error' })
+          } else {
+            enqueueSnackbar(`${error?.details || error?.message}`, { variant: 'error' })
           }
-        })
-      } catch (error: any) {
-        console.log("error LOL", error);
-        if (error?.code === 4001) {
-          enqueueSnackbar('User rejected the request', { variant: 'error' })
-        } else {
-          enqueueSnackbar('Error', { variant: 'error' })
         }
-      }
+      })
     }
   }
 
@@ -154,7 +155,7 @@ const ConnectWalletModal = ({
               flexGrow={1}
               padding={3}
               borderRadius={3}
-              onClick={() => handleConnectWallet(connector)}
+              onClick={() => handleConnectEVMWallet(connector)}
               className={clsx(
                 'cursor-pointer border-blackWhiteNeutral-800 bg-blackWhiteNeutral-900 hover:opacity-80 md:border-[1px]',
                 {
