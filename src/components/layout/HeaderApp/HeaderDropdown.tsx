@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 
 import BaseButton from '@/components/BaseButton'
 import { BaseImage } from '@/components/common/BaseImage'
@@ -17,6 +17,8 @@ import { useWallet } from '@solana/wallet-adapter-react'
 import { useDisconnect } from 'wagmi'
 import { useRouter } from 'next/navigation'
 import { CHAIN_TYPE } from '@/constant/enum/chain'
+import { useTonAddress } from '@tonconnect/ui-react'
+import { useTonConnectUI } from '@tonconnect/ui-react'
 
 const HeaderDropdown = () => {
   const typeChain = useAppSelector((state) => state?.appStore?.type)
@@ -25,20 +27,26 @@ const HeaderDropdown = () => {
   const { disconnect: disconnectSolana } = useWallet()
   // evm
   const { disconnect: disconnectEvm } = useDisconnect()
+  // ton
+  const [tonConnectUI] = useTonConnectUI();
+  const userFriendlyAddress = useTonAddress();
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorElNav)
   const router = useRouter()
   const dispatch = useAppDispatch()
 
 
-  const handleLogout = async () => {
+  const handleLogout = useCallback(async () => {
     console.log('handleLogout')
-
     await disconnectSolana()
     await disconnectEvm()
+    if (userFriendlyAddress) {
+      await tonConnectUI.disconnect()
+    }
     // deleteAccessToken()
     dispatch(appActions.updateWallet(null))
-  }
+  }, [disconnectSolana, disconnectEvm, tonConnectUI, dispatch, userFriendlyAddress])
 
   const menuItem = [
     {

@@ -19,6 +19,7 @@ import './styles.scss'
 import clsx from 'clsx'
 import Image from 'next/image'
 import { CHAIN_TYPE } from '@/constant/enum/chain'
+import { TonConnectButton, useTonConnectUI } from '@tonconnect/ui-react'
 
 interface WalletIconMapping {
   [key: string]: string
@@ -40,6 +41,7 @@ const ConnectWalletModal = ({
 }) => {
   const { wallets, select } = useWallet()
   const { connectors, connect, status } = useConnect()
+  const [tonConnectUI, setOptions] = useTonConnectUI();
   const { enqueueSnackbar } = useSnackbar()
   const dispatch = useAppDispatch()
 
@@ -60,15 +62,12 @@ const ConnectWalletModal = ({
     if (!provider) {
       enqueueSnackbar('Extension not installed', { variant: 'error' })
     } else {
-      console.log("comin here");
-
       connect({ connector: c }, {
         onSuccess: () => {
           close()
           dispatch(appActions.updateType(CHAIN_TYPE.EVM))
         },
         onError: (error: any) => {
-          console.log("error LOL", JSON.stringify(error));
           if (error?.code === 4001) {
             enqueueSnackbar('User rejected the request', { variant: 'error' })
           } else {
@@ -77,6 +76,14 @@ const ConnectWalletModal = ({
         }
       })
     }
+  }
+
+  const handleConnectTONWallet = () => {
+    close()
+    dispatch(appActions.updateConnectTon(true))
+    console.log('open modal TON');
+
+    tonConnectUI.openModal()
   }
 
   return (
@@ -177,6 +184,43 @@ const ConnectWalletModal = ({
               </Typography>
             </Box>
           ))}
+        </div>
+        <Typography
+          className="mt-20 mb-20 font-semibold text-lg"
+          color="blackWhiteNeutral.100"
+        >
+          TON Wallets
+        </Typography>
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4">
+          <Box
+            key={'ton'}
+            display="flex"
+            alignItems="center"
+            gap={2}
+            flexGrow={1}
+            padding={3}
+            borderRadius={3}
+            onClick={() => handleConnectTONWallet()}
+            className={clsx(
+              'cursor-pointer border-blackWhiteNeutral-800 bg-blackWhiteNeutral-900 hover:opacity-80 md:border-[1px]',
+              {
+                'opacity-50': false
+              }
+            )}
+          >
+            <Image
+              src={'https://app.rubic.exchange/assets/images/icons/wallets/tonconnect.svg'}
+              alt={'ton'}
+              height={32}
+              width={32}
+            />
+            <Typography
+              variant="MsSanParagraphMediumBold"
+              color="blackWhiteNeutral.100"
+            >
+              TonConnect
+            </Typography>
+          </Box>
         </div>
       </div>
     </ModalApp>

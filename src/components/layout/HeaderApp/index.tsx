@@ -26,6 +26,7 @@ import { useSnackbar } from 'notistack'
 import HeaderMobile from './HeaderMobile'
 import HeaderDropdown from './HeaderDropdown'
 import { CHAIN_TYPE } from '@/constant/enum/chain'
+import { useTonConnectUI, useTonAddress } from '@tonconnect/ui-react'
 
 export default function HeaderApp() {
   // solana
@@ -33,6 +34,10 @@ export default function HeaderApp() {
   // evm
   const { isConnected, address } = useAccount()
   const { disconnect: disconnectEvm } = useDisconnect()
+
+  // ton
+  const [tonConnectUI] = useTonConnectUI();
+  const userFriendlyAddress = useTonAddress();
 
   const { enqueueSnackbar } = useSnackbar()
   const { isOpen: isOpenHowItWork, open: openHowItWork, close: closeHowItWork } = useModal()
@@ -48,10 +53,13 @@ export default function HeaderApp() {
 
 
   const isShowConnectModal = useAppSelector((state) => state?.settings?.isShowConnectModal)
-  const typeChain = useAppSelector((state) => state?.appStore?.type)
+  const walletAddress = useAppSelector((state) => state?.appStore?.wallet)
   const connectSolana = useAppSelector((state) => state?.appStore?.connectSolana)
   const connectEvm = useAppSelector((state) => state?.appStore?.connectEvm)
   const connectTon = useAppSelector((state) => state?.appStore?.connectTon)
+
+  console.log("walletAddress", walletAddress);
+
 
   useEffect(() => {
     if (isMobile()) return
@@ -78,26 +86,43 @@ export default function HeaderApp() {
   useEffect(() => {
     if (connectSolana) {
       disconnectEvm()
+      if (userFriendlyAddress) {
+        tonConnectUI.disconnect()
+      }
     }
     if (connectEvm) {
       disconnectSolana()
+      if (userFriendlyAddress) {
+        tonConnectUI.disconnect()
+      }
     }
-  }, [connectSolana, connectEvm])
+    if (connectTon) {
+      disconnectEvm()
+      disconnectSolana()
+    }
+  }, [connectSolana, connectEvm, connectTon, tonConnectUI, userFriendlyAddress])
 
 
   useEffect(() => {
+
     // solana
-    if (connectedSolana && publicKey) {
+    if (publicKey) {
       dispatch(appActions.updateWallet(publicKey.toBase58()))
       handleClose()
       return
     }
     // evm
-    if (isConnected && address) {
+    if (address) {
       dispatch(appActions.updateWallet(address))
       return
     }
-  }, [dispatch, connectedSolana, publicKey, isConnected, address])
+
+    // ton
+    if (userFriendlyAddress) {
+      dispatch(appActions.updateWallet(userFriendlyAddress))
+      return
+    }
+  }, [dispatch, publicKey, isConnected, userFriendlyAddress])
 
   const pages: Array<{
     name: string
@@ -205,7 +230,7 @@ export default function HeaderApp() {
             alignItems="center"
             gap={3}
           > {
-              !connectedSolana && !isConnected ? (
+              !walletAddress ? (
                 <Box sx={{ flexGrow: 0 }}>
                   <BaseButton
                     color="secondary"
